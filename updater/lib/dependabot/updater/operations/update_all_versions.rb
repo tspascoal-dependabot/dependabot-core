@@ -31,7 +31,7 @@ module Dependabot
 
         def perform
           Dependabot.logger.info("Starting update job for #{job.source.repo}")
-          Dependabot.logger.info("Checking all dependencies for version updates...")
+          Dependabot.logger.info("Checking all dependencies for version updates...") #{dependencies.inspect}")
           dependencies.each { |dep| check_and_create_pr_with_error_handling(dep) }
         end
 
@@ -57,6 +57,7 @@ module Dependabot
         end
 
         def check_and_create_pr_with_error_handling(dependency)
+          Dependabot.logger.info("== check_and_create_pull_request #{dependency.name} for updates #{dependency.inspect}")
           check_and_create_pull_request(dependency)
         rescue Dependabot::InconsistentRegistryResponse => e
           error_handler.log_dependency_error(
@@ -168,7 +169,7 @@ module Dependabot
 
         def log_checking_for_update(dependency)
           Dependabot.logger.info(
-            "Checking if #{dependency.name} #{dependency.version} needs updating"
+            "== Checking if #{dependency.name} #{dependency.version} needs updating #{dependency.inspect}"
           )
           job.log_ignore_conditions_for(dependency)
         end

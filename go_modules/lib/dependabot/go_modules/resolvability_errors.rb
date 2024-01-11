@@ -1,6 +1,8 @@
 # typed: true
 # frozen_string_literal: true
 
+require "dependabot/logger"
+
 module Dependabot
   module GoModules
     module ResolvabilityErrors
@@ -11,6 +13,8 @@ module Dependabot
         unless mod_path && message.include?("If this is a private repository")
           raise Dependabot::DependencyFileNotResolvable, message
         end
+
+        Dependabot.logger.info "== ResolvabilityErrors.handle #{mod_path} = #{message}"
 
         # Module not found on github.com - query for _any_ version to know if it
         # doesn't exist (or is private) or we were just given a bad revision by this manifest

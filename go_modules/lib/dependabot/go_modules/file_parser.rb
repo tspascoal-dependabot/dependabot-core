@@ -6,6 +6,7 @@ require "dependabot/dependency"
 require "dependabot/file_parsers/base/dependency_set"
 require "dependabot/go_modules/path_converter"
 require "dependabot/go_modules/replace_stubber"
+require "dependabot/logger"
 require "dependabot/errors"
 require "dependabot/file_parsers"
 require "dependabot/file_parsers/base"
@@ -22,6 +23,10 @@ module Dependabot
         required_packages.each do |dep|
           dependency_set << dependency_from_details(dep) unless skip_dependency?(dep)
         end
+
+
+        Dependabot.logger.info "== Found #{dependency_set.dependencies.count} dependencies in #{go_mod.path}"
+        Dependabot.logger.info "== Found dependencies: #{dependency_set.inspect}"
 
         dependency_set.dependencies
       end
@@ -60,12 +65,16 @@ module Dependabot
           groups: []
         }]
 
-        Dependency.new(
+        d = Dependency.new(
           name: details["Path"],
           version: version,
           requirements: details["Indirect"] ? [] : reqs,
           package_manager: "go_modules"
         )
+
+        Dependabot.logger.info "== Found dependencies: #{d.inspect}"
+
+        d
       end
 
       def required_packages
@@ -78,6 +87,8 @@ module Dependabot
               FileUtils.mkdir_p(stub_path)
               FileUtils.touch(File.join(stub_path, "go.mod"))
             end
+
+            Dependabot.logger.info "== go.mod rewritten content: #{go_mod_content}"
 
             File.write("go.mod", go_mod_content)
 
@@ -109,6 +120,8 @@ module Dependabot
 
             stdout, stderr, status = Open3.capture3(command)
             handle_parser_error(path, stderr) unless status.success?
+
+            Dependabot.logger.info "== go mod edit output: #{stdout}"
 
             JSON.parse(stdout)
           end
