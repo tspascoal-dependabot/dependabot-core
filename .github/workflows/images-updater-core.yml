@@ -1,6 +1,6 @@
 name: Updater-Core image
 env:
-  UPDATER_CORE_IMAGE: "ghcr.io/dependabot/dependabot-updater-core"
+  UPDATER_CORE_IMAGE: "ghcr.io/tspascoal-dependabot/dependabot-updater-core"
 on:  # yamllint disable-line rule:truthy
   push:
     branches:
@@ -11,7 +11,7 @@ jobs:
   push-updater-core-image:
     name: Push dependabot-updater-core image to GHCR
     runs-on: ubuntu-latest
-    if: github.repository == 'dependabot/dependabot-core'
+    if: github.repository == 'tspascoal-dependabot/dependabot-core'
     permissions:
       contents: read
       packages: write
