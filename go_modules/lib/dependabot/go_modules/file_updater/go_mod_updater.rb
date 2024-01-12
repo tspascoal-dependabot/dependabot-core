@@ -159,6 +159,8 @@ module Dependabot
         def run_go_mod_tidy
           return unless tidy?
 
+          Dependabot.logger.info("== Running `go mod tidy` on #{directory}")
+
           command = "go mod tidy -e"
 
           # we explicitly don't raise an error for 'go mod tidy' and silently
@@ -187,6 +189,8 @@ module Dependabot
           # compile anything when it runs.
           tmp_go_file = "#{SecureRandom.hex}.go"
           File.write(tmp_go_file, "package dummypkg\n")
+
+          Dependabot.logger.info("== Running `go get` on #{directory}")
 
           command = +"go get"
           # `go get` accepts multiple packages, each separated by a space
