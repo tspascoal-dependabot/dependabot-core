@@ -154,7 +154,9 @@ module Dependabot
         end
 
         def update_checker_for(dependency, raise_on_ignored:)
-          Dependabot::UpdateCheckers.for_package_manager(job.package_manager).new(
+
+          Dependabot.logger.info("== for_package_manager #{job.package_manager} and dependency #{dependency.inspect}")
+          u = Dependabot::UpdateCheckers.for_package_manager(job.package_manager).new(
             dependency: dependency,
             dependency_files: dependency_snapshot.dependency_files,
             repo_contents_path: job.repo_contents_path,
@@ -165,6 +167,10 @@ module Dependabot
             requirements_update_strategy: job.requirements_update_strategy,
             options: job.experiments
           )
+
+          Dependabot.logger.info("== update_checker_for #{u.inspect}")
+
+          u
         end
 
         def log_checking_for_update(dependency)
