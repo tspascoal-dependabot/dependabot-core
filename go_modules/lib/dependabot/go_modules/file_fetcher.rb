@@ -4,6 +4,7 @@
 require "sorbet-runtime"
 require "dependabot/file_fetchers"
 require "dependabot/file_fetchers/base"
+require "dependabot/logger"
 
 module Dependabot
   module GoModules
@@ -48,6 +49,8 @@ module Dependabot
           fetched_files = [go_mod]
           # Fetch the (optional) go.sum
           fetched_files << go_sum if go_sum
+
+          Dependabot.logger.info "== Fetched files for: #{d.fetched_files} #{dependency.name}"
           fetched_files
         end
       end

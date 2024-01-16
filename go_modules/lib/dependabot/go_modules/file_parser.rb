@@ -24,7 +24,6 @@ module Dependabot
           dependency_set << dependency_from_details(dep) unless skip_dependency?(dep)
         end
 
-
         Dependabot.logger.info "== Found #{dependency_set.dependencies.count} dependencies in #{go_mod.path}"
         Dependabot.logger.info "== Found dependencies: #{dependency_set.inspect}"
 
