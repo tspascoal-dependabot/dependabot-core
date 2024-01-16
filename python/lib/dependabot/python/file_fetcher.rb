@@ -251,8 +251,12 @@ module Dependabot
           .select { |f| requirements_file?(f) }
       end
 
-      def child_requirement_txt_files
-        child_requirement_files.select { |f| f.name.end_with?(".txt") }
+      def child_requirement_txt_files      
+        c = child_requirement_files.select { |f| f.name.end_with?(".txt") }
+
+        Dependabot.logger.info("== child_requirement_txt_files: #{c.inspect}")
+
+        c
       end
 
       def child_requirement_in_files
