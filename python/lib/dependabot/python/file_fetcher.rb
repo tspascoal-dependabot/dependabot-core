@@ -289,6 +289,8 @@ module Dependabot
           path = File.join(current_dir, path) unless current_dir == "."
           path = cleanpath(path)
 
+          Dependabot.logger.info("== will attempt to fetch #{path} == #{file.name} previously fetched: #{previously_fetched_files.map(&:name).include?(path)}")
+
           next if previously_fetched_files.map(&:name).include?(path)
           next if file.name == path
 

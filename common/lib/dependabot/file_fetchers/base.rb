@@ -213,7 +213,7 @@ module Dependabot
       end
       def fetch_file_from_host(filename, type: "file", fetch_submodules: false)
 
-        Dependabot.logger.info("== Fetching #{filename} #{type} from #{source.provider}")
+        Dependabot.logger.info("== fetch_file_from_host #{filename} #{type} from #{source.provider}")
 
         return load_cloned_file_if_present(filename) unless repo_contents_path.nil?
 
