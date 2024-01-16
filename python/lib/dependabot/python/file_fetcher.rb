@@ -283,7 +283,7 @@ module Dependabot
         paths = file.content.scan(CHILD_REQUIREMENT_REGEX).flatten
         current_dir = File.dirname(file.name)
 
-        Dependabot.logger.info("== fetch_child_requirement_files #{file.name} #{paths.inspect}")
+        Dependabot.logger.info("== fetch_child_requirement_files #{file.name} #{paths.inspect} #{current_dir.inspect}")
 
         paths.flat_map do |path|
           path = File.join(current_dir, path) unless current_dir == "."
