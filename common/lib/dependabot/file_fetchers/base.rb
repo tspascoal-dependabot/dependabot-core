@@ -181,7 +181,8 @@ module Dependabot
         path = Pathname.new(File.join(directory, filename)).cleanpath.to_path
         repo_path = File.join(clone_repo_contents, path)
 
-        Dependabot.logger.info("== Loading #{path} from #{repo_path} exist= #{File.exist?(repo_path)}")
+        Dependabot.logger.info("== Loading #{path} from [#{repo_path}] exist= #{File.exist?(repo_path)} readable=#{File.readable?(repo_path)}")
+        
 
         raise Dependabot::DependencyFileNotFound, path unless File.exist?(repo_path)
 
