@@ -302,6 +302,8 @@ module Dependabot
                                 child_requirement_txt_files
 
         Dependabot.logger.info("== constraints_files #{all_requirement_files.inspect}")
+        Dependabot.logger.info("== requirements_txt_files #{requirements_txt_files.inspect}") 
+        Dependabot.logger.info("== child_requirement_txt_files #{child_requirement_txt_files.inspect}")
 
         constraints_paths = all_requirement_files.map do |req_file|
           current_dir = File.dirname(req_file.name)

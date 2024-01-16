@@ -51,7 +51,11 @@ module Dependabot
       private
 
       def requirement_files
-        dependency_files.select { |f| f.name.end_with?(".txt", ".in") }
+        r = dependency_files.select { |f| f.name.end_with?(".txt", ".in") }
+
+        Dependabot.logger.info(" == requirement_files found #{r.inspect} ")
+
+        r
       end
 
       def pipenv_dependencies
