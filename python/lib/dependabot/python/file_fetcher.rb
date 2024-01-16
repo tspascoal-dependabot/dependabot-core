@@ -189,7 +189,12 @@ module Dependabot
       end
 
       def requirements_txt_files
-        req_txt_and_in_files.select { |f| f.name.end_with?(".txt") }
+        Dependabot.logger.info("== checking requirements_txt_files")
+        f = req_txt_and_in_files.select { |f| f.name.end_with?(".txt") }
+
+        Dependabot.logger.info("== requirements_txt_files: #{f.inspect}")
+
+        f
       end
 
       def requirements_in_files
@@ -274,6 +279,8 @@ module Dependabot
         paths = file.content.scan(CHILD_REQUIREMENT_REGEX).flatten
         current_dir = File.dirname(file.name)
 
+        Dependabot.logger.info("== fetch_child_requirement_files #{file.name} #{paths.inspect}")
+
         paths.flat_map do |path|
           path = File.join(current_dir, path) unless current_dir == "."
           path = cleanpath(path)
@@ -293,6 +300,8 @@ module Dependabot
       def constraints_files
         all_requirement_files = requirements_txt_files +
                                 child_requirement_txt_files
+
+        Dependabot.logger.info("== constraints_files #{all_requirement_files.inspect}")
 
         constraints_paths = all_requirement_files.map do |req_file|
           current_dir = File.dirname(req_file.name)

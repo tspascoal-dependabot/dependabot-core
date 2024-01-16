@@ -50,6 +50,7 @@ module Dependabot
     def run
       Dependabot.logger.formatter = Dependabot::Logger::JobFormatter.new(job_id)
       Dependabot.logger.info("Starting job processing")
+      Dependabot.logger.info("== patched")
       perform_job
       Dependabot.logger.info("Finished job processing")
     rescue StandardError => e
