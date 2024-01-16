@@ -4,6 +4,7 @@
 require "toml-rb"
 require "open3"
 require "dependabot/errors"
+require "dependabot/logger"
 require "dependabot/shared_helpers"
 require "dependabot/python/file_parser"
 require "dependabot/python/pip_compile_file_matcher"
@@ -34,7 +35,11 @@ module Dependabot
         # (e.g., Django 2.x implies Python 3)
         def imputed_requirements
           requirement_files.flat_map do |file|
-            file.content.lines
+
+            Dependabot.logger.info "== Imputed requirements for: #{file.name}"
+            Dependabot.logger.info "== Content: #{file.content}"
+
+            c = file.content.lines
                 .select { |l| l.include?(";") && l.include?("python") }
                 .filter_map { |l| l.match(/python_version(?<req>.*?["'].*?['"])/) }
                 .map { |re| re.named_captures.fetch("req").gsub(/['"]/, "") }

@@ -6,6 +6,7 @@ require "sorbet-runtime"
 
 require "dependabot/file_fetchers"
 require "dependabot/file_fetchers/base"
+require "dependabot/logger"
 require "dependabot/python/language_version_manager"
 require "dependabot/python/pip_compile_file_matcher"
 require "dependabot/python/requirement_parser"
@@ -382,6 +383,9 @@ module Dependabot
         return true if file.name.match?(/requirements/x)
 
         file.content.lines.all? do |line|
+
+          Dependabot.logger.info "== looking at line #{line} Predicates #{line.strip.empty?} #{line.strip.start_with?("#", "-r ", "-c ", "-e ", "--")} #{line.match?(RequirementParser::VALID_REQ_TXT_REQUIREMENT)}"
+
           next true if line.strip.empty?
           next true if line.strip.start_with?("#", "-r ", "-c ", "-e ", "--")
 

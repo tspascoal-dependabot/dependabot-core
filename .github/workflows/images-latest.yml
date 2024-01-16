@@ -39,14 +39,14 @@ jobs:
           # - { name: elm, ecosystem: elm }
           # - { name: git_submodules, ecosystem: gitsubmodule }
           # - { name: github_actions, ecosystem: github-actions }
-          - { name: go_modules, ecosystem: gomod }
+          # - { name: go_modules, ecosystem: gomod }
           # - { name: gradle, ecosystem: gradle }
           # - { name: hex, ecosystem: mix }
           # - { name: maven, ecosystem: maven }
           # - { name: npm_and_yarn, ecosystem: npm }
           # - { name: nuget, ecosystem: nuget }
           # - { name: pub, ecosystem: pub }
-          # - { name: python, ecosystem: pip }
+          - { name: python, ecosystem: pip }
           # - { name: swift, ecosystem: swift }
           # - { name: terraform, ecosystem: terraform }
     env:
